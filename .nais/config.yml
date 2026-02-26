@@ -10,10 +10,10 @@ spec:
   image: {{image}}
   port: 4090
   liveness:
-    path: /internal/isAlive
+    path: /isAlive
     initialDelay: 5
   readiness:
-    path: /internal/isReady
+    path: /isReady
     initialDelay: 5
   observability:
     autoInstrumentation:
