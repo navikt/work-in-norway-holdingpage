@@ -1,0 +1,37 @@
+---
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  name: workinnorway-legacy
+  namespace: navno
+  labels:
+    team: navno
+spec:
+  image: {{image}}
+  port: 4090
+  liveness:
+    path: /internal/isAlive
+    initialDelay: 5
+  readiness:
+    path: /internal/isReady
+    initialDelay: 5
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
+  ingresses:
+  {{#each ingresses as |url|}}
+     - {{url}}
+  {{/each}}
+  env:
+    - name: NPM_CONFIG_CACHE
+      value: /tmp/npm-cache
+  replicas:
+  {{#with replicas}}
+    min: {{min}}
+    max: {{max}}
+  {{/with}}
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
