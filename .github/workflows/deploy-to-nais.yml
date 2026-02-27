@@ -1,4 +1,4 @@
-name: Deploy to nais
+name: Nais deployment workflow
 on:
     workflow_call:
         inputs:

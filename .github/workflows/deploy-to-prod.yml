@@ -1,4 +1,4 @@
-name: Build and deploy from main and create a new release
+name: Deploy to prod
 on:
     workflow_dispatch:
     push:
