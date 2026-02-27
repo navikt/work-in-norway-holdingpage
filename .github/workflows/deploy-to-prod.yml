@@ -1,12 +1,25 @@
 name: Build and deploy from main and create a new release
 on:
+    workflow_dispatch:
     push:
         branches:
             - 'main'
 
 jobs:
+    guard-main-branch:
+        name: Validate main branch
+        runs-on: ubuntu-latest
+        steps:
+            - name: Abort if branch is not main
+              run: |
+                  if [ "${{ github.ref }}" != "refs/heads/main" ]; then
+                      echo "This workflow can only run on the main branch. Current ref: ${{ github.ref }}"
+                      exit 1
+                  fi
+
     build:
         name: Build image
+        needs: guard-main-branch
         permissions:
             contents: read
             id-token: write
